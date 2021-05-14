@@ -11,7 +11,7 @@ const jobSchema = new mongoose.Schema({
     required: true
   },
   title : {
-    type: String
+    type: Array
   },
   description: {
     type: String
