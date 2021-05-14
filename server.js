@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const mongoose = require('mongoose');
 const api = require('./routes'); //Separate file for routes
 
@@ -22,6 +23,14 @@ mongoose.connect(conn, { //Arguments for Atlas
 const db = mongoose.connection;
 db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Connected to mongo'));
+
+// init session
+app.use(session({
+  secret: "yes",
+  resave: true,
+  saveUninitialized: true,
+  cookie: {}
+}));
 
 app.use(express.json()); // For sending and recieving data in json
 app.use(express.static('public')); // Needed to serve front end to user

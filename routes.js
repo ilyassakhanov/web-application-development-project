@@ -12,8 +12,9 @@ router.get('/', (req, res) => {
     res.json({ test: 'latest change' });
 });
 
-router.get('/jobs', (req, res) => {
-    res.json({ test: 'all jobs avaliable' });
+router.get('/jobs', async (req, res) => {
+    const result = await Job.find({description: {$exists: true}, title: {$exists: true, $not: {$size: 0}}});
+    res.json(result);
 });
 
 router.post('/create', (req, res) => {
@@ -29,12 +30,17 @@ router.get('/register', (req, res) => { // doesn't work
 });
 
 router.post('/register', async (req, res) => {
-    if ((req.body.username != null || req.body.username != "") && (req.body.password != null || req.body.password != "")) {
-        const job = new Job({
-            username: req.body.username,
-            password: req.body.password
-        });
-        const result = await job.save();
+    try {
+        if ((req.body.username != null || req.body.username != "") && (req.body.password != null || req.body.password != "")) {
+            const job = new Job({
+                username: req.body.username,
+                password: req.body.password
+            });
+            req.session.username = req.body.username;
+            const result = await job.save();
+        }
+    } catch (err) {
+        console.log(err);
     }
 });
 
