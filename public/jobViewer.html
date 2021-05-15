@@ -7,8 +7,12 @@
         <link rel="stylesheet" href="viewerStyle.css">
     </head>
     <body>        
-    <div id="app">
+    <div id="viewer">
+        <div id="jobs">
+            <textarea ref="title" v-model="title"></textarea>
+            <textarea ref="description" v-model="description"></textarea>
+        </div>
     </div>
-    <script src="app.js"></script>
+    <script src="viewer.js"></script>
     </body>
 </html>
