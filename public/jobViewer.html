@@ -1,18 +1,27 @@
 <DOCTYPE html>
-<html>
+    <html>
+
     <head>
         <meta charset="UTF-8">
         <title>Job viewer</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="viewerStyle.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     </head>
-    <body>        
-    <div id="viewer">
-        <div id="jobs">
-            <textarea ref="title" v-model="title"></textarea>
-            <textarea ref="description" v-model="description"></textarea>
+
+    <body>
+    
+        <div id="viewer">
+            <ol>
+                <job-item
+                    v-for="offer in offers"
+                    v-bind:job="offer"
+                    v-bind:key="offer.id">
+               </job-item>
+            </ol>
         </div>
-    </div>
-    <script src="viewer.js"></script>
+        
+        <script src="viewer.js"></script>
     </body>
-</html>
+
+    </html>
