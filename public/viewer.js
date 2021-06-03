@@ -1,15 +1,29 @@
 Vue.component('job-item', {
-    props: ['job'],
-    template: '<ul>{{ job.title }} ,{{ job.description }}</ul>'
+  props: ['job'],
+  template: '<ul>{{ job.title }} ,{{ job.description }}</ul>'
 })
 
 var app = new Vue({
-    el: '#viewer',
-    data: {
-      offers: [
-        {title: 'Title1', description: 'lorum ipsum'},
-        {title: 'Title2', description: 'lorum ipsum'},
-        {title: 'Title3', description: 'lorum ipsum'}
-      ]
+  el: '#viewer',
+  data: {
+    offers: []
+  },
+  async mounted() {
+    const url = `${window.location.origin}/api/jobs`;
+
+    let response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    }).catch((err) => {
+      alert(err);
+    });
+
+
+    if (response.status == 200) {
+      this.offers = await response.json();
     }
-})
+  }
+});

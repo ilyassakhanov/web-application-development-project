@@ -15,6 +15,7 @@ router.get('/', (req, res) => {
 router.get('/jobs', async (req, res) => {
     const result = await Job.find({description: {$exists: true}, title: {$exists: true, $not: {$size: 0}}});
     res.json(result);
+    res.status(200);
 });
 
 router.post('/create', (req, res) => {
