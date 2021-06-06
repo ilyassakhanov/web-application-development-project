@@ -13,13 +13,33 @@ router.get('/', (req, res) => {
 });
 
 router.get('/jobs', async (req, res) => {
-    const result = await Job.find({description: {$exists: true}, title: {$exists: true, $not: {$size: 0}}});
+    const result = await Job.find({ description: { $exists: true }, title: { $exists: true } });
     res.json(result);
-    res.status(200);
 });
 
-router.post('/create', (req, res) => {
-    res.json({ test: 'creates a new job' });
+router.post('/create', async (req, res) => {
+    try {
+        if ((req.body.title != null || req.body.title != "") &&
+            (req.body.description != null || req.body.description != "") &&
+            (req.body.categories != null || req.body.categories.lenghth > 0) &&
+            (req.body.username != null || req.body.username != "")) {
+            const result = await Job.updateOne({ username: req.body.username }, {
+                title: req.body.title,
+                categories: req.body.categories,
+                description: req.body.description
+            });
+
+
+            if (result == null) {
+                res.sendStatus(404);
+            } else {
+                res.sendStatus(200);
+            }
+        }
+
+    } catch (err) {
+        res.sendStatus(500);
+    }
 });
 
 router.post('/login', (req, res) => {

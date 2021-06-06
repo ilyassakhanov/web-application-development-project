@@ -19,6 +19,7 @@ var app = new Vue({
       }
     }).catch((err) => {
       alert(err);
+      done();
     });
 
 
