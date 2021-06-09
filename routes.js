@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Job = require('./models/job');
+const uuid = require('uuid');
 // remember pagination
 
 router.get('/test', (req, res) => {
@@ -17,7 +18,7 @@ router.get('/jobs', async (req, res) => {
     res.json(result);
 });
 
-router.post('/create', async (req, res) => {
+router.patch('/create', async (req, res) => {
     try {
         if ((req.body.title != null || req.body.title != "") &&
             (req.body.description != null || req.body.description != "") &&
@@ -52,7 +53,8 @@ router.get('/register', (req, res) => { // doesn't work
 
 router.post('/register', async (req, res) => {
     try {
-        if ((req.body.username != null || req.body.username != "") && (req.body.password != null || req.body.password != "")) {
+        if ((req.body.username != null || req.body.username != "") &&
+            (req.body.password != null || req.body.password != "")) {
             const job = new Job({
                 username: req.body.username,
                 password: req.body.password
@@ -65,6 +67,23 @@ router.post('/register', async (req, res) => {
     }
 });
 
+
+router.patch('/register/start', async (req, res) => {
+    try {
+        var uniqueID = uuid.v4();
+        req.session.id = uniqueID;
+        console.log(req.body.username);
+        console.log(uniqueID);
+        if ((req.body.username != null || req.body.username != "") &&
+            (req.body.password != null || req.body.password != "")) {
+            const result = await Job.updateOne({ username: req.body.username }, {
+                uuid: uniqueID
+            });
+        }
+    } catch (err) {
+        console.log(err);
+    }
+});
 
 
 module.exports = router;

@@ -36,7 +36,7 @@ app.use(express.json()); // For sending and recieving data in json
 app.use(express.static('public')); // Needed to serve front end to user
 app.use('/api', api);
 app.get('/register', (req, res) => res.sendFile(__dirname + '/public/register.html'))
-app.get('/create', (req, res) => res.sendFile(__dirname + '/public/createtor.html'))
+app.get('/create', (req, res) => res.sendFile(__dirname + '/public/creator.html'))
 app.get('*', (req, res) => res.sendFile(__dirname + '/public/jobViewer.html'));
 
 let port = process.env.PORT; // Allows to connect on Atlas

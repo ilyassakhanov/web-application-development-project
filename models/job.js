@@ -18,6 +18,9 @@ const jobSchema = new mongoose.Schema({
   },
   categories: {
     type: Array
+  },
+  uuid : {
+    type: String
   }
 });
 
