@@ -18,7 +18,7 @@ new Vue({
             if(registerResponse.status != 200) {
                 alert('Server error');
             }else {
-                location.replace(`${window.location.origin}/create`);
+                location.replace(`${window.location.origin}`);
             }
         }
     }

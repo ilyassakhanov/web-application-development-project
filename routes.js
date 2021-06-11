@@ -5,6 +5,18 @@ const uuid = require('uuid');
 const lodash = require('lodash');
 // remember pagination
 
+async function checkUser(req) {
+    let job = await Job.findOne({
+        username: req.body.username,
+        password: req.body.password
+    });
+
+    if (lodash.isEmpty(job)) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 router.get('/jobs', async (req, res) => {
     const result = await Job.find({ description: { $exists: true }, title: { $exists: true } });
@@ -38,15 +50,11 @@ router.patch('/create', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     try {
-        let job = await Job.findOne({
-            username: req.body.username,
-            password: req.body.password
-        });
-
-        if (job == null) {
+        let exists = await checkUser(req)
+        if (exists) {
+            res.sendStatus(200);
+        } else {
             res.sendStatus(404);
-        }else {
-        res.sendStatus(200);
         }
     } catch (err) {
         console.log(err);
