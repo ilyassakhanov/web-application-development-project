@@ -15,21 +15,10 @@ new Vue({
                     'Accept': 'application/json',
                 }
             });
-
-            if(registerResponse.status() != 200) {
+            if(registerResponse.status != 200) {
                 alert('Server error');
-            }
-            const startSessionURL = `${window.location.origin}/api/register/start`;
-            let sessionResponse = await fetch(startSessionURL, {
-                method : 'PATCH',
-                body : JSON.stringify({username: this.username}),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                }
-            }); 
-            if(sessionResponse.status() != 200) {
-                alert('Server error');
+            }else {
+                location.replace(`${window.location.origin}/create`);
             }
         }
     }

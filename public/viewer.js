@@ -1,6 +1,6 @@
 Vue.component('job-item', {
   props: ['job'],
-  template: '<ul>{{ job.title }} ,{{ job.description }}</ul>'
+  template: '<ul>{{ job.title }} ,{{ job.description }}, {{job.categories}}</ul>'
 })
 
 var app = new Vue({

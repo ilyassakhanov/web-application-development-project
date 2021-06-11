@@ -4,11 +4,6 @@ const Job = require('./models/job');
 const uuid = require('uuid');
 // remember pagination
 
-router.get('/test', (req, res) => {
-    res.json({ test: 'this is a test route' });
-});
-
-
 router.get('/', (req, res) => {
     res.json({ test: 'latest change' });
 });
@@ -20,17 +15,21 @@ router.get('/jobs', async (req, res) => {
 
 router.patch('/create', async (req, res) => {
     try {
+        console.log(req.session.id);
+        console.log(req.body.title);
+        console.log(req.body.description);
+        console.log(req.body.categories);
         if ((req.body.title != null || req.body.title != "") &&
             (req.body.description != null || req.body.description != "") &&
-            (req.body.categories != null || req.body.categories.lenghth > 0) &&
-            (req.body.username != null || req.body.username != "")) {
-            const result = await Job.updateOne({ username: req.body.username }, {
+            (req.body.categories != null || req.body.categories.lenghth > 0)&&
+            (req.session.id != null || req.session.id != "")) {
+           const job = await Job.updateOne({ uuid: req.session.id}, {
                 title: req.body.title,
                 categories: req.body.categories,
                 description: req.body.description
             });
 
-
+            // const result = await job.save();
             if (result == null) {
                 res.sendStatus(404);
             } else {
@@ -53,36 +52,21 @@ router.get('/register', (req, res) => { // doesn't work
 
 router.post('/register', async (req, res) => {
     try {
+        var uniqueID = uuid.v4();
+        req.session.id = uniqueID;
         if ((req.body.username != null || req.body.username != "") &&
             (req.body.password != null || req.body.password != "")) {
             const job = new Job({
                 username: req.body.username,
-                password: req.body.password
+                password: req.body.password,
+                uuid: uniqueID
             });
-            req.session.username = req.body.username;
             const result = await job.save();
         }
     } catch (err) {
         console.log(err);
     }
-});
-
-
-router.patch('/register/start', async (req, res) => {
-    try {
-        var uniqueID = uuid.v4();
-        req.session.id = uniqueID;
-        console.log(req.body.username);
-        console.log(uniqueID);
-        if ((req.body.username != null || req.body.username != "") &&
-            (req.body.password != null || req.body.password != "")) {
-            const result = await Job.updateOne({ username: req.body.username }, {
-                uuid: uniqueID
-            });
-        }
-    } catch (err) {
-        console.log(err);
-    }
+    res.sendStatus(200);
 });
 
 
