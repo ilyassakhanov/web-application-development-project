@@ -13,7 +13,7 @@ new Vue ({
             var categories = this.categories.split(', ');
             let response = await fetch(url, {
                 method: 'PATCH',
-                // TODO get username from cookies, add checking of username
+                // TODO add checking of username
 
                 body : JSON.stringify({title: this.title, description: this.description, categories: this.categories}),
                 headers: {

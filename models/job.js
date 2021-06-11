@@ -19,7 +19,7 @@ const jobSchema = new mongoose.Schema({
   categories: {
     type: Array
   },
-  uuid : {
+  identifier : {
     type: String
   }
 });
