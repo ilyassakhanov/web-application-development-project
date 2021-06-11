@@ -1,0 +1,31 @@
+<DOCTYPE html>
+    <html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Job viewer</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="viewerStyle.css">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+
+    <body>
+    
+        <div id="viewer">
+            <ol>
+                <job-item
+                    v-for="offer in offers"
+                    v-bind:job="offer">
+               </job-item>
+            </ol>
+        </div>
+        <div>
+            <button v-on:click="create">Create a job</button>
+        </div>
+        <div>
+            <button v-on:click="register">Register</button>
+        </div>
+        <script src="viewer.js"></script>
+    </body>
+
+    </html>

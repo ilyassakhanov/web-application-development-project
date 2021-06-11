@@ -1,0 +1,30 @@
+<DOCTYPE html> 
+    <html> 
+        <head>
+            <meta charset="UTF-8">
+            <title>Job creator</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        </head>
+        <body>
+            <div id="creator">
+                <div>
+                    <label for="title">title</label>
+                    <input type="text" name="title" v-model="title">
+                </div>
+                <div>
+                    <label for="description">description</label>
+                    <input type="text" name="description" v-model="description">
+                </div>
+                <div>
+                    <label for="categories">categories</label>
+                    <input type="text" name="categories" v-model="categories">
+                </div>
+                <div>
+                    <button v-on:click="create">Create</button>
+                </div>
+            </div>
+            
+            <script src="creator.js"></script>
+        </body>
+    </html>
